@@ -1,0 +1,62 @@
+\documentclass{amsart}
+\usepackage{hyperref}
+\usepackage{../include/scottfun}
+\renewcommand{\F}{\Diamond}  % Temporary hack
+
+\DeclareMathOperator{\U}{\mathcal{U}}
+\DeclareMathOperator{\Inf}{Inf}
+\DeclareMathOperator{\Act}{Act}
+\DeclareMathOperator{\ap}{AP}
+\DeclareMathOperator{\true}{\mathtt{true}}
+\DeclareMathOperator{\false}{\mathtt{false}}
+
+\theoremstyle{definition}
+\newtheorem{exer}{Exercise}
+
+
+\begin{document}
+\title{Introduction to Formal Methods in Robotics:\linebreak exercises}
+\author{Scott C. Livingston}
+\thanks{\textit{Email}: \href{mailto:slivingston@cds.caltech.edu}{slivingston@cds.caltech.edu}}
+\date{\textbf{draft}; built \now}
+\begin{abstract}
+We present a collection of exercises that supplements the Introduction
+\cite{ifmr2014}.  It should be possible to perform these without consulting
+outside resources.
+\end{abstract}
+\maketitle
+
+
+\begin{exer}
+In Definition~1 we assumed that $\delta$ is not a partial function.  Why is this
+without loss of generality?  ($f:A\rightarrow B$ is said to be a \textit{partial
+  function} if there may be elements of $A$ for which $f$ is not defined.)
+\end{exer}
+
+\begin{exer}
+Show that labeling in terms of a finite set of atomic propositions is equivalent
+to labeling with variables that take values from finite domains.
+(Cf.\ Section~5.)
+%% By ``equivalence,'' we mean that for any transition system $T_1$ with labels
+%% that are value assignments to a finite collection of variables, there is a
+%% transition system $T_2$ with labels that are subsets of a set of atomic
+%% propositions such that any property for $T_1$ can be
+\end{exer}
+
+\begin{exer}
+Let $p$ and $q$ be atomic propositions.  Prove that $\G p \wedge \G q \equiv  \G \left( p \wedge q \right)$.  (Hint: Ignore details concerning the system exhibiting labels, and instead reason about infinite strings.)
+\end{exer}
+
+\begin{exer}
+Construct two transition systems such that one simulates the other, but not the converse.
+\end{exer}
+
+\begin{exer}
+Construct a parity game with two vertices in which exactly one vertex is winning
+(for Player~0).
+\end{exer}
+
+
+\bibliographystyle{abbrv}
+\bibliography{intro}
+\end{document}

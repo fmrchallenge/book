@@ -1,0 +1,48 @@
+/* Exhibit the boolean function a1 & a2 & a3 */
+digraph G {
+ordering=out
+{rank=same
+a1 [shape=circle]
+}
+{rank=same
+a2_1 [shape=circle,label=a2]
+a2_2 [shape=circle,label=a2]
+}
+{rank=same
+a3_11 [shape=circle,label=a3]
+a3_12 [shape=circle,label=a3]
+a3_21 [shape=circle,label=a3]
+a3_22 [shape=circle,label=a3]
+}
+{rank=same
+a3_11_0 [shape=square,label=0]
+a3_11_1 [shape=square,label=0]
+a3_12_0 [shape=square,label=0]
+a3_12_1 [shape=square,label=0]
+a3_21_0 [shape=square,label=0]
+a3_21_1 [shape=square,label=0]
+a3_22_0 [shape=square,label=0]
+a3_22_1 [shape=square,label=1]
+}
+
+a1 -> a2_1 [style=dashed,label=0]
+a1 -> a2_2 [label=1]
+
+a2_1 -> a3_11 [style=dashed,label=0]
+a2_1 -> a3_12 [label=1]
+
+a2_2 -> a3_21 [style=dashed,label=0]
+a2_2 -> a3_22 [label=1]
+
+a3_11 -> a3_11_0 [style=dashed,label=0]
+a3_11 -> a3_11_1 [label=1]
+
+a3_12 -> a3_12_0 [style=dashed,label=0]
+a3_12 -> a3_12_1 [label=1]
+
+a3_21 -> a3_21_0 [style=dashed,label=0]
+a3_21 -> a3_21_1 [label=1]
+
+a3_22 -> a3_22_0 [style=dashed,label=0]
+a3_22 -> a3_22_1 [label=1]
+}
