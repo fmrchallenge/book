@@ -1,0 +1,27 @@
+%% Using the package graphicx causes the \rotatebox command below to be defined.
+\ProvidesPackage{fmrtexcommon}
+
+%% Code to create a timestamp. The resulting command is \now
+%%
+%% SCL; 30 May 2012
+\newcount\hour \newcount\minute
+\hour=\time \divide \hour by 60
+\minute=\time
+\loop \ifnum \minute > 59 \advance \minute by -60 \repeat
+\def\now{\number\year%
+-{\ifnum \month < 10 0\fi}\number\month%
+-{\ifnum \day < 10 0\fi}\number\day%
+~{\ifnum \hour < 10 0\fi}\number\hour%
+:{\ifnum \minute < 10 0\fi}\number\minute}
+
+
+%% Set of all states satisfying the formula
+%%
+%% Courtesy of Pavithra Prabhakar; Aug 2012.
+\newcommand{\sem}[1]{\ensuremath{[\![#1]\!]}}
+
+%% Several LTL operators
+\DeclareMathOperator{\Feventually}{\rotatebox[origin=c]{45}{$\Box$}}
+\DeclareMathOperator{\Galways}{\Box}
+\DeclareMathOperator{\Xnext}{\bigcirc}
+\DeclareMathOperator{\Uuntil}{\mathcal{U}}

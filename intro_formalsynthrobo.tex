@@ -1,9 +1,8 @@
 \documentclass{amsart}
 \usepackage{amssymb}
 \usepackage{hyperref,graphicx}
-\usepackage{../include/scottfun}
+\usepackage{fmrtexcommon}
 
-\DeclareMathOperator{\U}{\mathcal{U}}
 \DeclareMathOperator{\Inf}{Inf}
 \DeclareMathOperator{\Act}{Act}
 \DeclareMathOperator{\ap}{AP}
@@ -333,15 +332,15 @@ $\true$ and $q$ being $\false$.
 Let $\ap$ be a finite set of atomic propositions.  Syntax of LTL is obtained
 from the grammar
 \begin{equation}\label{eq:ltlgramm}
-\varphi ::= \true \mid p \mid \varphi \vee \varphi \mid \neg \varphi \mid \X \varphi \mid \varphi \U \varphi
+\varphi ::= \true \mid p \mid \varphi \vee \varphi \mid \neg \varphi \mid \Xnext \varphi \mid \varphi \Uuntil \varphi
 \end{equation}
 where $p\in\ap$.  Derived from these, we have
 \begin{align*}
 \false & := \neg \true \\
 \varphi \wedge \varphi & := \neg \left( \neg \varphi \vee \neg \varphi \right ) \\
 \varphi \implies \varphi & := \neg \varphi \vee \varphi \\
-\F \varphi & := \true \U \varphi \\
-\G \varphi & := \neg \F \neg \varphi ,
+\Feventually \varphi & := \true \Uuntil \varphi \\
+\Galways \varphi & := \neg \Feventually \neg \varphi ,
 \end{align*}
 any of which can be used as ``$\varphi$'' in the productions of
 \eqref{eq:ltlgramm}.  Checking consistency of these syntactic derivations with
@@ -362,12 +361,12 @@ $\sigma$ after the character at index $k$.  Define
 \begin{enumerate}
 \item $\sigma \models \true$ always (i.e., for $\sigma$);
 \item $\sigma \models p$ iff $p\in \sigma_0$;
-\item $\sigma \models \neg \varphi$ iff $\sigma\models\varphi$ is false, which is denoted by $\sigma \notmodels \varphi$;
+\item $\sigma \models \neg \varphi$ iff $\sigma\models\varphi$ is false, which is denoted by $\sigma \not\models \varphi$;
 \item $\sigma \models \varphi \vee \psi$ iff $\sigma \models \varphi$ or $\sigma \models \psi$;
-\item $\sigma \models \X \varphi$ iff $\sigma_{1:} \models \varphi$;
-\item $\sigma \models \varphi\U \psi$ iff either $\sigma\models\psi$ or there exists $j > 0$ such that for all $i$ where $0\leq i<j$, $\sigma_{i:}\models \varphi$ and $\sigma_{j:}\models \psi$;
-\item $\sigma \models \F \varphi$ iff there exists $i\geq0$ such that $\sigma_{i:}\models \varphi$;
-\item $\sigma \models \G \varphi$ iff for all $i\geq0$, $\sigma_{i:}\models \varphi$.
+\item $\sigma \models \Xnext \varphi$ iff $\sigma_{1:} \models \varphi$;
+\item $\sigma \models \varphi\Uuntil \psi$ iff either $\sigma\models\psi$ or there exists $j > 0$ such that for all $i$ where $0\leq i<j$, $\sigma_{i:}\models \varphi$ and $\sigma_{j:}\models \psi$;
+\item $\sigma \models \Feventually \varphi$ iff there exists $i\geq0$ such that $\sigma_{i:}\models \varphi$;
+\item $\sigma \models \Galways \varphi$ iff for all $i\geq0$, $\sigma_{i:}\models \varphi$.
 \end{enumerate}
 With the above construction, the \textit{language} of an LTL formula $\varphi$
 is the set of all strings (i.e., sequences of configurations of the atomic
@@ -377,13 +376,13 @@ The syntax for regular expressions of Section~\ref{sec:reglang} can be extended
 for $\omega$-regular expressions by introducing $\alpha^{\omega}$, which
 indicates countably infinite repetition of the regular expression $\alpha$.
 \begin{examp}
-Let $\ap=\{ p, q\}$, and consider the LTL formula $\G\F p$.  Intuitively,
-$L(\G\F p)$ is the set of all sequences where $p$ occurs infinitely often.
+Let $\ap=\{ p, q\}$, and consider the LTL formula $\Galways\Feventually p$.  Intuitively,
+$L(\Galways\Feventually p)$ is the set of all sequences where $p$ occurs infinitely often.
 E.g., $\{p\}^{\omega}=\{p\}\{p\}\cdots$ is the sequence where $p$ is always
-$\true$ and $q$ is always $\false$.  Clearly $\{p\}^{\omega}\in L(\G\F p)$.
+$\true$ and $q$ is always $\false$.  Clearly $\{p\}^{\omega}\in L(\Galways\Feventually p)$.
 A precise characterization is
 \[
-L(\G\F p) = \left\{ \sigma\in 2^{\ap} \mid \forall i \exists j : j > i \wedge \left( p\in\sigma_j \right) \right\} .
+L(\Galways\Feventually p) = \left\{ \sigma\in 2^{\ap} \mid \forall i \exists j : j > i \wedge \left( p\in\sigma_j \right) \right\} .
 \]
 \end{examp}
 
@@ -463,12 +462,12 @@ description of properties held by a system.  For instance, we can formally say
 that a print server, given enough ink, must always eventually complete printing
 jobs using an LTL formula like
 \[
-\G\left(\mathtt{ink}\rightarrow \bigwedge_{i}\G\left( r_i \rightarrow \F g_i \right)\right) .
+\Galways\left(\mathtt{ink}\rightarrow \bigwedge_{i}\Galways\left( r_i \rightarrow \Feventually g_i \right)\right) .
 \]
 In the context of motion planning, we can formally say that a robot must reach
 and remain within the $\mathrm{Goal}$ region while avoiding the
-$\mathrm{Unsafe}$ region using a formula like $\G \neg\mathrm{Unsafe} \wedge
-\F\G \mathrm{Goal}$.  In the present setting, the thing for which we wish to
+$\mathrm{Unsafe}$ region using a formula like $\Galways \neg\mathrm{Unsafe} \wedge
+\Feventually\Galways \mathrm{Goal}$.  In the present setting, the thing for which we wish to
 achieve or verify such properties is modeled by a transition system, as in the
 following
 \begin{defn}\label{def:ts}
@@ -717,7 +716,7 @@ temporal and modal logic.
 %% in \cite{PnueliR1989}.
 We also refer to $\varphi$ above as the
 ``specification.''  In addition to being computationally hard, it is possible to
-write noncausal specifications.  E.g., $(\F x) \implies y$ is not practical
+write noncausal specifications.  E.g., $(\Feventually x) \implies y$ is not practical
 because in order to correctly set $y$ at the first time step, whether $x$ is $\true$
 at a future time must be known.  Following the terminology of
 \cite{PnueliR1989}, the (possibly adversarial) thing that selects values for
@@ -796,13 +795,13 @@ $\false$.\footnote{This could be presented in terms of a set of atomic
   present formulation in terms of variables is more common.}  The canonical
 GR(1) formula is
 \begin{equation}\label{eq:gr1}
-  \theta^{\mathrm{env}} \wedge \G \rho^{\mathrm{env}} \wedge \left( \bigwedge_{j=1}^{m} \G\F \varphi^{\mathrm{env}}_{j} \right) \implies \theta^{\mathrm{sys}} \wedge \G \rho^{\mathrm{sys}} \wedge \left( \bigwedge_{i=1}^{n} \G\F \varphi^{\mathrm{sys}}_{i} \right)
+  \theta^{\mathrm{env}} \wedge \Galways \rho^{\mathrm{env}} \wedge \left( \bigwedge_{j=1}^{m} \Galways\Feventually \varphi^{\mathrm{env}}_{j} \right) \implies \theta^{\mathrm{sys}} \wedge \Galways \rho^{\mathrm{sys}} \wedge \left( \bigwedge_{i=1}^{n} \Galways\Feventually \varphi^{\mathrm{sys}}_{i} \right)
 \end{equation}
 where
 \begin{itemize}
 \item $\theta^{\mathrm{env}}$ and $\theta^{\mathrm{sys}}$ are initial conditions;
-\item $\rho^{\mathrm{env}}$ is a transition rule given as an LTL formula in terms of $\mathcal{X}\cup\mathcal{Y}\cup\X\mathcal{X}$, where no other temporal operators appear;
-\item $\rho^{\mathrm{sys}}$ is a transition rule in terms of $\mathcal{X}\cup\mathcal{Y}\cup\X\mathcal{X}\cup\X\mathcal{Y}$; and
+\item $\rho^{\mathrm{env}}$ is a transition rule given as an LTL formula in terms of $\mathcal{X}\cup\mathcal{Y}\cup\Xnext\mathcal{X}$, where no other temporal operators appear;
+\item $\rho^{\mathrm{sys}}$ is a transition rule in terms of $\mathcal{X}\cup\mathcal{Y}\cup\Xnext\mathcal{X}\cup\Xnext\mathcal{Y}$; and
 \item $\varphi^{\mathrm{env}}_{j}$ and $\varphi^{\mathrm{sys}}_{i}$ are state formulae (i.e., lack temporal operators) in terms of $\mathcal{X}\cup\mathcal{Y}$.
 \end{itemize}
 The left side of \eqref{eq:gr1} is informally referred to as the assumption, and
@@ -1036,5 +1035,5 @@ Eric M. Wolff contributed detailed comments on an early draft.
 
 
 \bibliographystyle{abbrv}
-\bibliography{/home/scott/scott_centre/research/labnotes_etc/labnotes/references_bib/all}
+\bibliography{introfmr}
 \end{document}
