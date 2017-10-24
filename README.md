@@ -1,3 +1,16 @@
+Introduction to Formal Methods for Robotics
+===========================================
+
+Abstract
+--------
+
+This book provides a concise, self-contained introduction to topics usually
+regarded as formal methods for robotics.  We assume the reader has background
+knowledge broadly associated with robotics research, e.g., of classical (linear)
+control theory, elementary graph search methods, and propositional (Boolean)
+logic.
+
+
 License
 -------
 
