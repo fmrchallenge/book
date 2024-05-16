@@ -1,5 +1,3 @@
-# Build "Primer to formal methods in robotics" and a collection of exercises.
-
 BUILDDIR=build/
 
 all: intro_formalsynthrobo exercises
